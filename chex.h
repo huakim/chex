@@ -30,11 +30,10 @@ SOFTWARE.
  * @return TRUE if h is hexadecimal, FALSE otherwise
 **/
 static unsigned chex_isxdigit(unsigned h){
-  unsigned char n09 = h - '0';
-  unsigned char nAF = (h | 0x20) - 'a';
-  return (n09 <= (9 - 0)) || (nAF <= (0xf - 0xa));
+ if (h >= '0' && h <= '9') return h - '9';
+ if (h >= 'A' && h <= 'F') return h - 'A';
+ if (h >= 'a' && h <= 'f') return h - 'a';
 }
-
 
 /**
  * @brief encode nibble to hexadecimal ASCII character
@@ -43,7 +42,7 @@ static unsigned chex_isxdigit(unsigned h){
  * @note the four most significant bits are ignored
 **/
 static char chex_toxdigit(unsigned nibble){
-  const char* lut = "0123456789abcdef";
+  static const char* lut = "0123456789abcdef";
   return lut[nibble & 0xf];
 }
 
